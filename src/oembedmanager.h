@@ -8,6 +8,7 @@
 namespace qoembed {
 
 class Request;
+class Response;
 
 class QOEMBEDSHARED_EXPORT OEmbedManager : public QObject
 {
@@ -20,7 +21,7 @@ public:
     void fetch(const Request &request);
 
 Q_SIGNALS:
-    void finished();
+    void finished(qoembed::Response *response);
 
 private Q_SLOTS:
     void replyFinished(const QString &contentType, const QByteArray &content);

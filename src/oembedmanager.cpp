@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QUrl>
 
+#include "jsonparser.h"
 #include "provider.h"
 #include "request.h"
 
@@ -32,7 +33,15 @@ void OEmbedManager::replyFinished(const QString &contentType, const QByteArray &
 {
     qDebug() << contentType;
     qDebug() << content;
-    emit finished();
+
+    Response *response = 0;
+
+    if (contentType.contains("json")) {
+        JsonParser parser;
+         response = parser.fromJson(content);
+    }
+
+    emit finished(response);
 }
 
 } // namespace qoembed

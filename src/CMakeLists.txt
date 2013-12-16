@@ -1,9 +1,11 @@
 ### qoembed library ###
 
 set(qoembed_SRCS
+    jsonparser.cpp
     oembedmanager.cpp
     provider.cpp
     request.cpp
+    response.cpp
 )
 
 add_definitions(-DQOEMBED_LIBRARY)
