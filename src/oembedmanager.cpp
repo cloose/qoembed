@@ -6,6 +6,7 @@
 #include "jsonparser.h"
 #include "provider.h"
 #include "request.h"
+#include "xmlparser.h"
 
 namespace qoembed {
 
@@ -25,6 +26,8 @@ void OEmbedManager::fetch(const Request &request)
 
     connect(provider, SIGNAL(finished(QString, QByteArray)),
             SLOT(replyFinished(QString,QByteArray)));
+    connect(provider, SIGNAL(error(QNetworkReply::NetworkError,QString)),
+            SLOT(replyError(QNetworkReply::NetworkError,QString)));
 
     provider->fetch(request);
 }
@@ -38,10 +41,21 @@ void OEmbedManager::replyFinished(const QString &contentType, const QByteArray &
 
     if (contentType.contains("json")) {
         JsonParser parser;
-         response = parser.fromJson(content);
+        response = parser.fromJson(content);
+    }
+
+    if (contentType.contains("xml")) {
+        XmlParser parser;
+        response = parser.fromXml(content);
     }
 
     emit finished(response);
+}
+
+void OEmbedManager::replyError(QNetworkReply::NetworkError code, const QString &errorString)
+{
+    // TODO!
+    qDebug() << code << errorString;
 }
 
 } // namespace qoembed

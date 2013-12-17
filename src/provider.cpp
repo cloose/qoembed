@@ -2,7 +2,6 @@
 
 #include <QDebug>
 #include <QNetworkAccessManager>
-#include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QRegExp>
 #include <QUrl>
@@ -86,10 +85,14 @@ Provider *Provider::createForUrl(const QUrl &url, QObject *parent)
 
 void Provider::replyFinished(QNetworkReply *reply)
 {
-    QVariant contentType = reply->header(QNetworkRequest::ContentTypeHeader);
-    QByteArray contentData = reply->readAll();
+    if (reply->error() == QNetworkReply::NoError) {
+        QVariant contentType = reply->header(QNetworkRequest::ContentTypeHeader);
+        QByteArray contentData = reply->readAll();
 
-    emit finished(contentType.toString(), contentData);
+        emit finished(contentType.toString(), contentData);
+    } else {
+        emit error(reply->error(), reply->errorString());
+    }
 }
 
 } // namespace qoembed

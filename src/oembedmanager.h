@@ -3,6 +3,7 @@
 
 #include "qoembed_global.h"
 
+#include <QNetworkReply>
 #include <QObject>
 
 namespace qoembed {
@@ -25,6 +26,7 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     void replyFinished(const QString &contentType, const QByteArray &content);
+    void replyError(QNetworkReply::NetworkError code, const QString &errorString);
 };
 
 } // namespace qoembed

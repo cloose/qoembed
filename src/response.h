@@ -31,7 +31,6 @@ public:
     QString authorName() const;
 
 private:
-//    Q_DISABLE_COPY(Response)
     ResponsePrivate *d;
 };
 

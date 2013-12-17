@@ -5,7 +5,7 @@
 
 #include <QObject>
 #include <QMap>
-class QNetworkReply;
+#include <QNetworkReply>
 class QUrl;
 
 namespace qoembed {
@@ -28,6 +28,7 @@ public:
     static Provider *createForUrl(const QUrl &url, QObject *parent = 0);
 
 Q_SIGNALS:
+    void error(QNetworkReply::NetworkError code, const QString &errorString);
     void finished(const QString &contentType, const QByteArray &content);
 
 private Q_SLOTS:
