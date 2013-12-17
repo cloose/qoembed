@@ -15,6 +15,7 @@ enable_testing()
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Network REQUIRED)
+find_package(Qt5Xml REQUIRED)
 
 ### Subdirs ###
 
