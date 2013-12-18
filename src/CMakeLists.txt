@@ -6,6 +6,8 @@ set(qoembed_SRCS
     provider.cpp
     request.cpp
     response.cpp
+    rich.cpp
+    video.cpp
     xmlparser.cpp
 )
 
