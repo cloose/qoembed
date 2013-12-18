@@ -17,6 +17,7 @@ public:
     Response *fromXml(const QByteArray &data);
 
 private:
+    void fillCommonValues(const QDomElement &root, Response *response);
     QDomElement findElement(const QDomElement &root, const QString &tagName) const;
 };
 

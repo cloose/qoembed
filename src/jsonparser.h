@@ -2,6 +2,7 @@
 #define QOEMBED_JSONPARSER_H
 
 class QByteArray;
+class QJsonObject;
 
 namespace qoembed {
 
@@ -13,6 +14,9 @@ public:
     JsonParser();
 
     Response *fromJson(const QByteArray &data);
+
+private:
+    void fillCommonValues(const QJsonObject &obj, Response *response);
 };
 
 } // namespace qoembed

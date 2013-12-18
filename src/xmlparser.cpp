@@ -5,6 +5,8 @@
 #include <QDomDocument>
 
 #include "response.h"
+#include "rich.h"
+#include "video.h"
 
 namespace qoembed {
 
@@ -25,7 +27,39 @@ Response *XmlParser::fromXml(const QByteArray &data)
 
     QDomElement root = doc.documentElement();
 
+    QString type = findElement(root, "type").text();
+    if (type == "video") {
+        Video* video = new Video();
+        fillCommonValues(root, video);
+
+        video->setHtml(findElement(root, "html").text());
+        QString width = findElement(root, "width").text();
+        video->setWidth(width.toUInt());
+        QString height = findElement(root, "height").text();
+        video->setHeight(height.toUInt());
+
+        return video;
+    } else if (type == "rich") {
+        Rich* rich = new Rich();
+        fillCommonValues(root, rich);
+
+        rich->setHtml(findElement(root, "html").text());
+        QString width = findElement(root, "width").text();
+        rich->setWidth(width.toUInt());
+        QString height = findElement(root, "height").text();
+        rich->setHeight(height.toUInt());
+
+        return rich;
+    }
+
     Response *response = new Response();
+    fillCommonValues(root, response);
+
+    return response;
+}
+
+void XmlParser::fillCommonValues(const QDomElement &root, Response *response)
+{
     response->setType(findElement(root, "type").text());
     response->setVersion(findElement(root, "version").text());
     response->setTitle(findElement(root, "title").text());
@@ -33,8 +67,6 @@ Response *XmlParser::fromXml(const QByteArray &data)
     response->setAuthorUrl(findElement(root, "author_url").text());
     response->setProviderName(findElement(root, "provider_name").text());
     response->setProviderUrl(findElement(root, "provider_url").text());
-
-    return response;
 }
 
 QDomElement XmlParser::findElement(const QDomElement &root, const QString &tagName) const
