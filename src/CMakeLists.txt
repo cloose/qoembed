@@ -2,7 +2,9 @@
 
 set(qoembed_SRCS
     jsonparser.cpp
+    link.cpp
     oembedmanager.cpp
+    photo.cpp
     provider.cpp
     request.cpp
     response.cpp

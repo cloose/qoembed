@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QDomDocument>
 
+#include "link.h"
+#include "photo.h"
 #include "response.h"
 #include "rich.h"
 #include "video.h"
@@ -50,11 +52,25 @@ Response *XmlParser::fromXml(const QByteArray &data)
         rich->setHeight(height.toUInt());
 
         return rich;
+    } else if (type == "photo") {
+        Photo* photo = new Photo();
+        fillCommonValues(root, photo);
+
+        photo->setUrl(findElement(root, "url").text());
+        QString width = findElement(root, "width").text();
+        photo->setWidth(width.toUInt());
+        QString height = findElement(root, "height").text();
+        photo->setHeight(height.toUInt());
+
+        return photo;
+    } else if (type == "link") {
+        Link* link = new Link();
+        fillCommonValues(root, link);
+        return link;
     }
 
     Response *response = new Response();
     fillCommonValues(root, response);
-
     return response;
 }
 

@@ -5,6 +5,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "link.h"
+#include "photo.h"
 #include "response.h"
 #include "rich.h"
 #include "video.h"
@@ -14,7 +16,6 @@ namespace qoembed {
 JsonParser::JsonParser()
 {
 }
-
 
 Response *JsonParser::fromJson(const QByteArray &data)
 {
@@ -49,11 +50,25 @@ Response *JsonParser::fromJson(const QByteArray &data)
         rich->setHeight(height.toUInt());
 
         return rich;
+    } else if (type == "photo") {
+        Photo* photo = new Photo();
+        fillCommonValues(obj, photo);
+
+        photo->setUrl(obj.value("url").toString());
+        QString width = obj.value("width").toString();
+        photo->setWidth(width.toUInt());
+        QString height = obj.value("height").toString();
+        photo->setHeight(height.toUInt());
+
+        return photo;
+    } else if (type == "link") {
+        Link* link = new Link();
+        fillCommonValues(obj, link);
+        return link;
     }
 
     Response *response = new Response();
     fillCommonValues(obj, response);
-
     return response;
 }
 
