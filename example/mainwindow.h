@@ -22,6 +22,8 @@ public:
 private slots:
     void finished(qoembed::Response* response);
     
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     qoembed::OEmbedManager *manager;

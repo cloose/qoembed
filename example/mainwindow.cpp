@@ -17,13 +17,12 @@ MainWindow::MainWindow(QWidget *parent) :
     manager(new OEmbedManager())
 {
     ui->setupUi(this);
+    ui->webView->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
 
     connect(manager, SIGNAL(finished(qoembed::Response*)),
             SLOT(finished(qoembed::Response*)));
 
     QNetworkProxyFactory::setUseSystemConfiguration(true);
-
-    manager->fetch(Request::createForUrl(QUrl("http://www.flickr.com/photos/bees/2341623661/")));
 }
 
 MainWindow::~MainWindow()
@@ -35,4 +34,14 @@ void MainWindow::finished(qoembed::Response *response)
 {
     qDebug() << response->type() << response->render();
     ui->webView->setHtml(response->render());
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    if (ui->lineEdit->text().isEmpty()) {
+        return;
+    }
+
+    QUrl resourceUrl(ui->lineEdit->text());
+    manager->fetch(Request::createForUrl(resourceUrl));
 }
