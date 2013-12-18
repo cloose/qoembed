@@ -17,12 +17,11 @@ OEmbedManager::OEmbedManager(QObject *parent) :
 
 OEmbedManager::~OEmbedManager()
 {
-    qDebug() << Q_FUNC_INFO;
 }
 
 void OEmbedManager::fetch(const Request &request)
 {
-    Provider *provider = Provider::createForUrl(request.url(), this);
+    Provider *provider = Provider::createForUrl(request.url()/*, this*/);
 
     connect(provider, SIGNAL(finished(QString, QByteArray)),
             SLOT(replyFinished(QString,QByteArray)));
@@ -50,12 +49,18 @@ void OEmbedManager::replyFinished(const QString &contentType, const QByteArray &
     }
 
     emit finished(response);
+
+    // delete now unneeded provider
+    sender()->deleteLater();
 }
 
 void OEmbedManager::replyError(QNetworkReply::NetworkError code, const QString &errorString)
 {
     // TODO!
     qDebug() << code << errorString;
+
+    // delete now unneeded provider
+    sender()->deleteLater();
 }
 
 } // namespace qoembed
