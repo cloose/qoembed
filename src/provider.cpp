@@ -14,9 +14,28 @@ namespace qoembed {
 static QMap<QString, QString> InitUrlSchemeToEndpoints()
 {
     QMap<QString, QString> urlSchemeToEndpoints;
+
+    // Youtube
     urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/watch.+$", "http://www.youtube.com/oembed");
+    urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/v/.+$", "http://www.youtube.com/oembed");
+    urlSchemeToEndpoints.insert("^http(?:s)?://youtu\\.be/.+$", "http://www.youtube.com/oembed");
+    urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/user/.+$", "http://www.youtube.com/oembed");
+    urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/[^#?/]+#[^#?/]+/.+$", "http://www.youtube.com/oembed");
+    urlSchemeToEndpoints.insert("^http(?:s)?://m\\.youtube\\.com/index.+$", "http://www.youtube.com/oembed");
+    urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/profile.+$", "http://www.youtube.com/oembed");
+    urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/view_play_list.+$", "http://www.youtube.com/oembed");
+    urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/playlist.+$", "http://www.youtube.com/oembed");
+
+    // Flickr
     urlSchemeToEndpoints.insert("^http://[-\\w]+\\.flickr\\.com/photos/.+$", "http://www.flickr.com/services/oembed/");
+    urlSchemeToEndpoints.insert("^http://flic\\.kr\\.com/.+$", "http://www.flickr.com/services/oembed/");
+
+    // Slideshare
     urlSchemeToEndpoints.insert("^http://www\\.slideshare\\.net/.+$", "https://www.slideshare.net/api/oembed/2");
+
+    // Twitter
+    urlSchemeToEndpoints.insert("^http(?:s)?://twitter\\.com/(?:#!)?[^#?/]+/status/.+$", "https://api.twitter.com/1/statuses/oembed.{format}");
+
     return urlSchemeToEndpoints;
 }
 
@@ -25,6 +44,7 @@ const QMap<QString, QString> Provider::urlSchemeToEndpoints = InitUrlSchemeToEnd
 class ProviderPrivate
 {
 public:
+    ProviderPrivate() : manager(0) {}
     ~ProviderPrivate() { delete manager; }
 
     QString endpoint;
@@ -36,6 +56,7 @@ Provider::Provider(const QString &endpoint, QObject *parent) :
     QObject(parent),
     d(new ProviderPrivate)
 {
+    setObjectName("Provider for " + endpoint);
     d->endpoint = endpoint;
     d->manager = new QNetworkAccessManager();
 
@@ -45,7 +66,6 @@ Provider::Provider(const QString &endpoint, QObject *parent) :
 
 Provider::~Provider()
 {
-    qDebug() << Q_FUNC_INFO;
     delete d;
 }
 
@@ -93,6 +113,8 @@ void Provider::replyFinished(QNetworkReply *reply)
     } else {
         emit error(reply->error(), reply->errorString());
     }
+
+    reply->deleteLater();
 }
 
 } // namespace qoembed
