@@ -47,6 +47,11 @@ Video &Video::operator=(const Video &rhs)
     return *this;
 }
 
+QString Video::render() const
+{
+    return html();
+}
+
 void Video::setHtml(const QString &html)
 {
     d->html = html;

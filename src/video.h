@@ -17,6 +17,8 @@ public:
 
     Video &operator=(const Video &rhs);
 
+    virtual QString render() const;
+
     void setHtml(const QString &html);
     QString html() const;
 

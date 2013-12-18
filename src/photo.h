@@ -17,6 +17,8 @@ public:
 
     Photo &operator=(const Photo &rhs);
 
+    virtual QString render() const;
+
     void setUrl(const QString &url);
     QString url() const;
 

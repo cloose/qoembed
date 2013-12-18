@@ -8,6 +8,8 @@ namespace qoembed {
 
 class QOEMBEDSHARED_EXPORT Link : public Response
 {
+public:
+    virtual QString render() const;
 };
 
 } // namespace qoembed

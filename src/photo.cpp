@@ -47,6 +47,11 @@ Photo &Photo::operator=(const Photo &rhs)
     return *this;
 }
 
+QString Photo::render() const
+{
+    return QString("<img src=\"%1\" style=\"width:%2px; height:%3px;\" alt=\"%4\" title=\"%4\"/>").arg(url()).arg(width()).arg(height()).arg(title());
+}
+
 void Photo::setUrl(const QString &url)
 {
     d->url = url;

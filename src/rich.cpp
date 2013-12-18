@@ -47,6 +47,11 @@ Rich &Rich::operator=(const Rich &rhs)
     return *this;
 }
 
+QString Rich::render() const
+{
+    return html();
+}
+
 void Rich::setHtml(const QString &html)
 {
     d->html = html;

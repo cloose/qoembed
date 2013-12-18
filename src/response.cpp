@@ -65,6 +65,11 @@ Response &Response::operator=(const Response &rhs)
     return *this;
 }
 
+QString Response::render() const
+{
+    return QString();
+}
+
 void Response::setType(const QString &type)
 {
     d->type = type;

@@ -14,9 +14,11 @@ class QOEMBEDSHARED_EXPORT Response
 public:
     Response();
     Response(const Response &other);
-    ~Response();
+    virtual ~Response();
 
     Response &operator=(const Response &rhs);
+
+    virtual QString render() const;
 
     void setType(const QString &type);
     QString type() const;
