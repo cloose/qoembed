@@ -2,6 +2,8 @@
 #define QOEMBED_XMLPARSER_H
 
 class QByteArray;
+class QDomElement;
+class QString;
 
 namespace qoembed {
 
@@ -13,6 +15,9 @@ public:
     XmlParser();
 
     Response *fromXml(const QByteArray &data);
+
+private:
+    QDomElement findElement(const QDomElement &root, const QString &tagName) const;
 };
 
 } // namespace qoembed

@@ -30,6 +30,15 @@ public:
     void setAuthorName(const QString &authorName);
     QString authorName() const;
 
+    void setAuthorUrl(const QString &authorUrl);
+    QString authorUrl() const;
+
+    void setProviderName(const QString &providerName);
+    QString providerName() const;
+
+    void setProviderUrl(const QString &providerUrl);
+    QString providerUrl() const;
+
 private:
     ResponsePrivate *d;
 };
