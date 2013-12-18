@@ -7,6 +7,8 @@ namespace qoembed {
 class ResponsePrivate
 {
 public:
+    ResponsePrivate() : thumbnailWidth(0), thumbnailHeight(0) {}
+
     QString type;
     QString version;
     QString title;
@@ -14,6 +16,9 @@ public:
     QString authorUrl;
     QString providerName;
     QString providerUrl;
+    QString thumbnailUrl;
+    unsigned thumbnailWidth;
+    unsigned thumbnailHeight;
 };
 
 Response::Response() :
@@ -31,6 +36,9 @@ Response::Response(const Response &other)
     d->authorUrl = other.d->authorUrl;
     d->providerName = other.d->providerName;
     d->providerUrl = other.d->providerUrl;
+    d->thumbnailUrl = other.d->thumbnailUrl;
+    d->thumbnailWidth = other.d->thumbnailWidth;
+    d->thumbnailHeight = other.d->thumbnailHeight;
 }
 
 Response::~Response()
@@ -49,6 +57,9 @@ Response &Response::operator=(const Response &rhs)
         d->authorUrl = rhs.d->authorUrl;
         d->providerName = rhs.d->providerName;
         d->providerUrl = rhs.d->providerUrl;
+        d->thumbnailUrl = rhs.d->thumbnailUrl;
+        d->thumbnailWidth = rhs.d->thumbnailWidth;
+        d->thumbnailHeight = rhs.d->thumbnailHeight;
     }
 
     return *this;
@@ -122,6 +133,36 @@ void Response::setProviderUrl(const QString &providerUrl)
 QString Response::providerUrl() const
 {
     return d->providerUrl;
+}
+
+void Response::setThumbnailUrl(const QString &thumbnailUrl)
+{
+    d->thumbnailUrl = thumbnailUrl;
+}
+
+QString Response::thumbnailUrl() const
+{
+    return d->thumbnailUrl;
+}
+
+void Response::setThumbnailWidth(unsigned thumbnailWidth)
+{
+    d->thumbnailWidth = thumbnailWidth;
+}
+
+unsigned Response::thumbnailWidth() const
+{
+    return d->thumbnailWidth;
+}
+
+void Response::setThumbnailHeight(unsigned thumbnailHeight)
+{
+    d->thumbnailHeight = thumbnailHeight;
+}
+
+unsigned Response::thumbnailHeight() const
+{
+    return d->thumbnailHeight;
 }
 
 } // namespace qoembed

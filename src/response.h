@@ -39,6 +39,15 @@ public:
     void setProviderUrl(const QString &providerUrl);
     QString providerUrl() const;
 
+    void setThumbnailUrl(const QString &thumbnailUrl);
+    QString thumbnailUrl() const;
+
+    void setThumbnailWidth(unsigned thumbnailWidth);
+    unsigned thumbnailWidth() const;
+
+    void setThumbnailHeight(unsigned thumbnailHeight);
+    unsigned thumbnailHeight() const;
+
 private:
     ResponsePrivate *d;
 };
