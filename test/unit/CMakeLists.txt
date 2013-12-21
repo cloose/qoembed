@@ -10,7 +10,7 @@ set(providertest_SRCS
 
 add_executable(providertest ${providertest_SRCS})
 target_link_libraries(providertest qoembed)
-qt5_use_modules(providertest Test)
+qt5_use_modules(providertest Network Test)
 
 add_test(NAME providertest COMMAND providertest)
 
@@ -22,7 +22,7 @@ set(oembedmanagertest_SRCS
 
 add_executable(oembedmanagertest ${oembedmanagertest_SRCS})
 target_link_libraries(oembedmanagertest qoembed)
-qt5_use_modules(oembedmanagertest Test)
+qt5_use_modules(oembedmanagertest Network Test)
 
 add_test(NAME oembedmanagertest COMMAND oembedmanagertest)
 
