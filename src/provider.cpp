@@ -56,11 +56,21 @@ static QMap<QString, QString> InitUrlSchemeToEndpoints()
     urlSchemeToEndpoints.insert(QStringLiteral("^http://[-\\w]+\\.flickr\\.com/photos/.+$"), QStringLiteral("http://www.flickr.com/services/oembed/"));
     urlSchemeToEndpoints.insert(QStringLiteral("^http://flic\\.kr\\.com/.+$"), QStringLiteral("http://www.flickr.com/services/oembed/"));
 
+    // GitHub
+    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://gist\\.github\\.com/.+$"), QStringLiteral("https://github.com/api/oembed"));
+
+    // Kickstarter
+    urlSchemeToEndpoints.insert(QStringLiteral("^http://[-\\w]+\\.kickstarter\\.com/projects/.+$"), QStringLiteral("http://www.kickstarter.com/services/oembed"));
+
     // Slideshare
     urlSchemeToEndpoints.insert(QStringLiteral("^http://www\\.slideshare\\.net/.+$"), QStringLiteral("https://www.slideshare.net/api/oembed/2"));
 
     // Twitter
     urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://twitter\\.com/(?:#!)?[^#?/]+/status/.+$"), QStringLiteral("https://api.twitter.com/1/statuses/oembed.{format}"));
+
+    // Vimeo
+    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:www\\.)?vimeo\\.com/.+$"), QStringLiteral("http://www.vimeo.com/api/oembed.{format}"));
+    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://player\\.vimeo\\.com/.+$"), QStringLiteral("http://www.vimeo.com/api/oembed.{format}"));
 
     return urlSchemeToEndpoints;
 }
