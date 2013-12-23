@@ -40,10 +40,12 @@ public:
     static Request createForUrl(const QUrl &url);
     Request &withMaxWidth(unsigned width);
     Request &withMaxHeight(unsigned height);
+    Request &withFormat(const QString &format);
 
     QUrl url() const;
     unsigned maxWidth() const;
     unsigned maxHeight() const;
+    QString format() const;
 
     QUrlQuery createQuery() const;
 
@@ -53,7 +55,7 @@ private:
     QUrl m_url;
     unsigned m_maxWidth;
     unsigned m_maxHeight;
-    QString format;
+    QString m_format;
 };
 
 } // namespace qoembed

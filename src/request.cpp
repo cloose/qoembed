@@ -46,6 +46,12 @@ Request &Request::withMaxHeight(unsigned height)
     return *this;
 }
 
+Request &Request::withFormat(const QString &format)
+{
+    m_format = format;
+    return *this;
+}
+
 QUrl Request::url() const
 {
     return m_url;
@@ -61,6 +67,11 @@ unsigned Request::maxHeight() const
     return m_maxHeight;
 }
 
+QString Request::format() const
+{
+    return m_format;
+}
+
 QUrlQuery Request::createQuery() const
 {
     QUrlQuery query;
@@ -72,6 +83,10 @@ QUrlQuery Request::createQuery() const
 
     if (m_maxHeight > 0) {
         query.addQueryItem("maxheight", QString::number(m_maxHeight));
+    }
+
+    if (!m_format.isEmpty()) {
+        query.addQueryItem("format", m_format);
     }
 
     return query;
