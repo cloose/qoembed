@@ -4,7 +4,7 @@ compiler:
   - clang
   
 before_install:
-  - sudo add-apt-repository -y ppa:kubuntu-ppa/backports  # for CMake
+  - sudo add-apt-repository -y ppa:kalakris/cmake         # for CMake
   - sudo add-apt-repository -y ppa:ubuntu-sdk-team/ppa    # for Qt5
   - sudo apt-get update
   - sudo apt-get remove libqt4-dev-bin
