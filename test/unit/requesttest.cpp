@@ -19,7 +19,8 @@ private Q_SLOTS:
     void holdsMaxHeight();
     void returnsEmptyFormatIfNotProvided();
     void holdsFormat();
-    void createsUrlQueryFromRequestData();
+    void createsUrlQueryFromCompleteRequestData();
+    void createsUrlQueryIfOnlyUrlProvided();
 };
 
 RequestTest::RequestTest()
@@ -88,7 +89,7 @@ void RequestTest::holdsFormat()
     QCOMPARE(request.format(), format);
 }
 
-void RequestTest::createsUrlQueryFromRequestData()
+void RequestTest::createsUrlQueryFromCompleteRequestData()
 {
     QUrl url("http://example.com");
     unsigned maxWidth = 123;
@@ -112,6 +113,23 @@ void RequestTest::createsUrlQueryFromRequestData()
     QVERIFY(query.hasQueryItem("maxwidth"));
     QVERIFY(query.hasQueryItem("maxheight"));
     QVERIFY(query.hasQueryItem("format"));
+    QCOMPARE(query.query(), expectedQuery);
+}
+
+void RequestTest::createsUrlQueryIfOnlyUrlProvided()
+{
+    QUrl url("http://example.com");
+
+    QString expectedQuery = QString("url=%1").arg(QString(url.toEncoded()));
+
+    Request request = Request::createForUrl(url);
+
+    QUrlQuery query = request.createQuery();
+
+    QVERIFY(query.hasQueryItem("url"));
+    QVERIFY(!query.hasQueryItem("maxwidth"));
+    QVERIFY(!query.hasQueryItem("maxheight"));
+    QVERIFY(!query.hasQueryItem("format"));
     QCOMPARE(query.query(), expectedQuery);
 }
 
