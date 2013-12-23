@@ -195,4 +195,24 @@ unsigned Response::thumbnailHeight() const
     return d->thumbnailHeight;
 }
 
+bool Response::isLink() const
+{
+    return d->type == QLatin1String("link");
+}
+
+bool Response::isPhoto() const
+{
+    return d->type == QLatin1String("photo");
+}
+
+bool Response::isRich() const
+{
+    return d->type == QLatin1String("rich");
+}
+
+bool Response::isVideo() const
+{
+    return d->type == QLatin1String("video");
+}
+
 } // namespace qoembed

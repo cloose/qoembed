@@ -66,6 +66,7 @@ void OEmbedManagerTest::returnsResponseThatContainsResourceTypeVideoForYoutube()
     Response *response = args.at(0).value<Response*>();
 
     QVERIFY2(response != 0, "response is null");
+    QVERIFY(response->isVideo());
     QCOMPARE(response->type(), QStringLiteral("video"));
 #endif
 }
@@ -84,6 +85,7 @@ void OEmbedManagerTest::returnsResponseThatContainsResourceTypePhotoForFlicker()
     Response *response = args.at(0).value<Response*>();
 
     QVERIFY2(response != 0, "response is null");
+    QVERIFY(response->isPhoto());
     QCOMPARE(response->type(), QStringLiteral("photo"));
 }
 
@@ -101,6 +103,7 @@ void OEmbedManagerTest::returnsResponseThatContainsResourceTypeRichForSlideshare
     Response *response = args.at(0).value<Response*>();
 
     QVERIFY2(response != 0, "response is null");
+    QVERIFY(response->isRich());
     QCOMPARE(response->type(), QStringLiteral("rich"));
 }
 

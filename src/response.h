@@ -75,6 +75,11 @@ public:
     void setThumbnailHeight(unsigned thumbnailHeight);
     unsigned thumbnailHeight() const;
 
+    bool isLink() const;
+    bool isPhoto() const;
+    bool isRich() const;
+    bool isVideo() const;
+
 private:
     ResponsePrivate *d;
 };
