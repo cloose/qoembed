@@ -56,9 +56,6 @@ static QMap<QString, QRegularExpression> InitEndpointToUrlSchemes()
     endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.flickr.com/services/oembed/"), QRegularExpression("^http://[-\\w]+\\.flickr\\.com/photos/.+$"));
     endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.flickr.com/services/oembed/"), QRegularExpression("^http://flic\\.kr\\.com/.+$"));
 
-    // GitHub
-    endpointToUrlSchemes.insertMulti(QStringLiteral("https://github.com/api/oembed"), QRegularExpression("^http(?:s)?://gist\\.github\\.com/.+$"));
-
     // Kickstarter
     endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.kickstarter.com/services/oembed"), QRegularExpression("^http://[-\\w]+\\.kickstarter\\.com/projects/.+$"));
 
