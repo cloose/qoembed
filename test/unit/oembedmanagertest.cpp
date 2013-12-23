@@ -20,6 +20,7 @@ private Q_SLOTS:
     void initTestCase();
 
     void canFetchResource();
+    void returnsErrorResponseForUnknownUrl();
     void returnsResponseThatContainsResourceTypeVideoForYoutube();
     void returnsResponseThatContainsResourceTypePhotoForFlicker();
     void returnsResponseThatContainsResourceTypeRichForSlideshare();
@@ -49,6 +50,25 @@ void OEmbedManagerTest::canFetchResource()
     QList<QVariant> args = spy.takeFirst();
     QVERIFY(args.at(0).canConvert<Response*>());
 #endif
+}
+
+void OEmbedManagerTest::returnsErrorResponseForUnknownUrl()
+{
+    OEmbedManager manager;
+    QSignalSpy spy(&manager, SIGNAL(finished(qoembed::Response*)));
+
+    manager.fetch(Request::createForUrl(QUrl("http://example.com")));
+
+    spy.wait();
+
+    QCOMPARE(spy.count(), 1);
+
+    QList<QVariant> args = spy.takeFirst();
+    Response *response = args.at(0).value<Response*>();
+
+    QVERIFY2(response != 0, "response is null");
+    QVERIFY(response->isError());
+    QVERIFY2(!response->render().isEmpty(), "response is empty");
 }
 
 void OEmbedManagerTest::returnsResponseThatContainsResourceTypeVideoForYoutube()

@@ -28,6 +28,7 @@
 #include <QDebug>
 #include <QUrl>
 
+#include "error.h"
 #include "jsonparser.h"
 #include "provider.h"
 #include "request.h"
@@ -47,6 +48,12 @@ OEmbedManager::~OEmbedManager()
 void OEmbedManager::fetch(const Request &request)
 {
     Provider *provider = Provider::createForUrl(request.url()/*, this*/);
+
+    if (!provider) {
+        Error *error = new Error(tr("No suitable provider found for requested URL"));
+        emit finished(error);
+        return;
+    }
 
     connect(provider, SIGNAL(finished(QString, QByteArray)),
             SLOT(replyFinished(QString,QByteArray)));
