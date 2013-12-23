@@ -59,8 +59,6 @@ void OEmbedManagerTest::returnsErrorResponseForUnknownUrl()
 
     manager.fetch(Request::createForUrl(QUrl("http://example.com")));
 
-    spy.wait();
-
     QCOMPARE(spy.count(), 1);
 
     QList<QVariant> args = spy.takeFirst();
