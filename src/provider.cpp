@@ -36,30 +36,31 @@
 
 namespace qoembed {
 
+/* information comes from https://github.com/panzi/oembedendpoints */
 static QMap<QString, QString> InitUrlSchemeToEndpoints()
 {
     QMap<QString, QString> urlSchemeToEndpoints;
 
     // Youtube
-    urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/watch.+$", "http://www.youtube.com/oembed");
-    urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/v/.+$", "http://www.youtube.com/oembed");
-    urlSchemeToEndpoints.insert("^http(?:s)?://youtu\\.be/.+$", "http://www.youtube.com/oembed");
-    urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/user/.+$", "http://www.youtube.com/oembed");
-    urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/[^#?/]+#[^#?/]+/.+$", "http://www.youtube.com/oembed");
-    urlSchemeToEndpoints.insert("^http(?:s)?://m\\.youtube\\.com/index.+$", "http://www.youtube.com/oembed");
-    urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/profile.+$", "http://www.youtube.com/oembed");
-    urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/view_play_list.+$", "http://www.youtube.com/oembed");
-    urlSchemeToEndpoints.insert("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/playlist.+$", "http://www.youtube.com/oembed");
+    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/watch.+$"), QStringLiteral("http://www.youtube.com/oembed"));
+    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/v/.+$"), QStringLiteral("http://www.youtube.com/oembed"));
+    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://youtu\\.be/.+$"), QStringLiteral("http://www.youtube.com/oembed"));
+    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/user/.+$"), QStringLiteral("http://www.youtube.com/oembed"));
+    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/[^#?/]+#[^#?/]+/.+$"), QStringLiteral("http://www.youtube.com/oembed"));
+    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://m\\.youtube\\.com/index.+$"), QStringLiteral("http://www.youtube.com/oembed"));
+    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/profile.+$"), QStringLiteral("http://www.youtube.com/oembed"));
+    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/view_play_list.+$"), QStringLiteral("http://www.youtube.com/oembed"));
+    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/playlist.+$"), QStringLiteral("http://www.youtube.com/oembed"));
 
     // Flickr
-    urlSchemeToEndpoints.insert("^http://[-\\w]+\\.flickr\\.com/photos/.+$", "http://www.flickr.com/services/oembed/");
-    urlSchemeToEndpoints.insert("^http://flic\\.kr\\.com/.+$", "http://www.flickr.com/services/oembed/");
+    urlSchemeToEndpoints.insert(QStringLiteral("^http://[-\\w]+\\.flickr\\.com/photos/.+$"), QStringLiteral("http://www.flickr.com/services/oembed/"));
+    urlSchemeToEndpoints.insert(QStringLiteral("^http://flic\\.kr\\.com/.+$"), QStringLiteral("http://www.flickr.com/services/oembed/"));
 
     // Slideshare
-    urlSchemeToEndpoints.insert("^http://www\\.slideshare\\.net/.+$", "https://www.slideshare.net/api/oembed/2");
+    urlSchemeToEndpoints.insert(QStringLiteral("^http://www\\.slideshare\\.net/.+$"), QStringLiteral("https://www.slideshare.net/api/oembed/2"));
 
     // Twitter
-    urlSchemeToEndpoints.insert("^http(?:s)?://twitter\\.com/(?:#!)?[^#?/]+/status/.+$", "https://api.twitter.com/1/statuses/oembed.{format}");
+    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://twitter\\.com/(?:#!)?[^#?/]+/status/.+$"), QStringLiteral("https://api.twitter.com/1/statuses/oembed.{format}"));
 
     return urlSchemeToEndpoints;
 }
