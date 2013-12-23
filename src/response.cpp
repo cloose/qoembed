@@ -195,6 +195,11 @@ unsigned Response::thumbnailHeight() const
     return d->thumbnailHeight;
 }
 
+bool Response::isError() const
+{
+    return d->type == QLatin1String("error");
+}
+
 bool Response::isLink() const
 {
     return d->type == QLatin1String("link");

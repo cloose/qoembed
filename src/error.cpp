@@ -23,70 +23,62 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef QOEMBED_RESPONSE_H
-#define QOEMBED_RESPONSE_H
+#include "error.h"
 
-#include "qoembed_global.h"
-
-#include <QMetaType>
+#include <QString>
 
 namespace qoembed {
 
-class ResponsePrivate;
-
-class QOEMBEDSHARED_EXPORT Response
+class ErrorPrivate
 {
 public:
-    Response();
-    Response(const Response &other);
-    virtual ~Response();
-
-    Response &operator=(const Response &rhs);
-
-    virtual QString render() const;
-
-    void setType(const QString &type);
-    QString type() const;
-
-    void setVersion(const QString &version);
-    QString version() const;
-
-    void setTitle(const QString &title);
-    QString title() const;
-
-    void setAuthorName(const QString &authorName);
-    QString authorName() const;
-
-    void setAuthorUrl(const QString &authorUrl);
-    QString authorUrl() const;
-
-    void setProviderName(const QString &providerName);
-    QString providerName() const;
-
-    void setProviderUrl(const QString &providerUrl);
-    QString providerUrl() const;
-
-    void setThumbnailUrl(const QString &thumbnailUrl);
-    QString thumbnailUrl() const;
-
-    void setThumbnailWidth(unsigned thumbnailWidth);
-    unsigned thumbnailWidth() const;
-
-    void setThumbnailHeight(unsigned thumbnailHeight);
-    unsigned thumbnailHeight() const;
-
-    bool isError() const;
-    bool isLink() const;
-    bool isPhoto() const;
-    bool isRich() const;
-    bool isVideo() const;
-
-private:
-    ResponsePrivate *d;
+    QString errorString;
 };
 
+Error::Error(const QString &errorString) :
+    Response(),
+    d(new ErrorPrivate)
+{
+    setType("error");
+    setErrorString(errorString);
+}
+
+Error::Error(const Error &other) :
+    Response(other)
+{
+    d = new ErrorPrivate;
+    d->errorString = other.d->errorString;
+}
+
+Error::~Error()
+{
+    delete d;
+}
+
+Error &Error::operator=(const Error &rhs)
+{
+    // no self-assignment
+    if (this != &rhs) {
+        Response::operator =(rhs);
+        d->errorString = rhs.d->errorString;
+    }
+
+    return *this;
+}
+
+QString Error::render() const
+{
+    return QString("<p>%1</p>").arg(errorString());
+}
+
+void Error::setErrorString(const QString &errorString)
+{
+    d->errorString = errorString;
+}
+
+QString Error::errorString() const
+{
+    return d->errorString;
+}
+
 } // namespace qoembed
-
-Q_DECLARE_METATYPE(qoembed::Response*)
-
-#endif // QOEMBED_RESPONSE_H

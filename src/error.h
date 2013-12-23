@@ -23,70 +23,36 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef QOEMBED_RESPONSE_H
-#define QOEMBED_RESPONSE_H
+#ifndef QOEMBED_ERROR_H
+#define QOEMBED_ERROR_H
 
 #include "qoembed_global.h"
+#include "response.h"
 
-#include <QMetaType>
+#include <QString>
 
 namespace qoembed {
 
-class ResponsePrivate;
+class ErrorPrivate;
 
-class QOEMBEDSHARED_EXPORT Response
+class QOEMBEDSHARED_EXPORT Error : public Response
 {
 public:
-    Response();
-    Response(const Response &other);
-    virtual ~Response();
+    explicit Error(const QString &errorString = QString());
+    Error(const Error &other);
+    ~Error();
 
-    Response &operator=(const Response &rhs);
+    Error &operator=(const Error &rhs);
 
     virtual QString render() const;
 
-    void setType(const QString &type);
-    QString type() const;
-
-    void setVersion(const QString &version);
-    QString version() const;
-
-    void setTitle(const QString &title);
-    QString title() const;
-
-    void setAuthorName(const QString &authorName);
-    QString authorName() const;
-
-    void setAuthorUrl(const QString &authorUrl);
-    QString authorUrl() const;
-
-    void setProviderName(const QString &providerName);
-    QString providerName() const;
-
-    void setProviderUrl(const QString &providerUrl);
-    QString providerUrl() const;
-
-    void setThumbnailUrl(const QString &thumbnailUrl);
-    QString thumbnailUrl() const;
-
-    void setThumbnailWidth(unsigned thumbnailWidth);
-    unsigned thumbnailWidth() const;
-
-    void setThumbnailHeight(unsigned thumbnailHeight);
-    unsigned thumbnailHeight() const;
-
-    bool isError() const;
-    bool isLink() const;
-    bool isPhoto() const;
-    bool isRich() const;
-    bool isVideo() const;
+    void setErrorString(const QString &errorString);
+    QString errorString() const;
 
 private:
-    ResponsePrivate *d;
+    ErrorPrivate *d;
 };
 
 } // namespace qoembed
 
-Q_DECLARE_METATYPE(qoembed::Response*)
-
-#endif // QOEMBED_RESPONSE_H
+#endif // QOEMBED_ERROR_H

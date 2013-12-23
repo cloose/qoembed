@@ -1,6 +1,7 @@
 ### qoembed library ###
 
 set(qoembed_SRCS
+    error.cpp
     jsonparser.cpp
     link.cpp
     oembedmanager.cpp
