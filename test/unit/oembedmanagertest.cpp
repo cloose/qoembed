@@ -38,7 +38,6 @@ void OEmbedManagerTest::initTestCase()
 
 void OEmbedManagerTest::canFetchResource()
 {
-#if 0
     OEmbedManager manager;
 
     QSignalSpy spy(&manager, SIGNAL(finished(qoembed::Response*)));
@@ -49,7 +48,6 @@ void OEmbedManagerTest::canFetchResource()
 
     QList<QVariant> args = spy.takeFirst();
     QVERIFY(args.at(0).canConvert<Response*>());
-#endif
 }
 
 void OEmbedManagerTest::returnsErrorResponseForUnknownUrl()

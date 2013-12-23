@@ -73,11 +73,11 @@ void OEmbedManager::replyFinished(const QString &contentType, const QByteArray &
     if (contentType.contains("json")) {
         JsonParser parser;
         response = parser.fromJson(content);
-    }
-
-    if (contentType.contains("xml")) {
+    } else if (contentType.contains("xml")) {
         XmlParser parser;
         response = parser.fromXml(content);
+    } else {
+        response = new Error(tr("Content type '%1' of server response is not supported").arg(contentType));
     }
 
     emit finished(response);
@@ -90,6 +90,9 @@ void OEmbedManager::replyError(QNetworkReply::NetworkError code, const QString &
 {
     // TODO!
     qDebug() << code << errorString;
+
+    Error *error = new Error(errorString);
+    emit finished(error);
 
     // delete now unneeded provider
     sender()->deleteLater();
