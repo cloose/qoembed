@@ -65,7 +65,7 @@ private:
 
     ProviderPrivate *d;
 
-    static const QMap<QString, QString> urlSchemeToEndpoints;
+    static const QMap<QString, QRegularExpression> endpointToUrlSchemes;
 };
 
 

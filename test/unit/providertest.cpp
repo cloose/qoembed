@@ -21,6 +21,8 @@ private Q_SLOTS:
     void returnsProviderForKnownUrl();
     void returnsDifferentProviderForDifferentUrls();
     void canFetchResource();
+
+    void benchmarkCreateForUrl();
 };
 
 ProviderTest::ProviderTest()
@@ -68,6 +70,15 @@ void ProviderTest::canFetchResource()
     provider->fetch(Request::createForUrl(QUrl("http://www.slideshare.net/JuhaPeltomki/qt5-cplus-lyhytkurssi")));
 
     QVERIFY2(spy.wait(), "fetch request didn't finish after 5000 ms");
+}
+
+void ProviderTest::benchmarkCreateForUrl()
+{
+    QUrl url("http://www.slideshare.net/JuhaPeltomki/qt5-cplus-lyhytkurssi");
+
+    QBENCHMARK {
+        Provider::createForUrl(url);
+    }
 }
 
 QTEST_MAIN(ProviderTest)

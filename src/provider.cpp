@@ -28,7 +28,7 @@
 #include <QDebug>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QUrl>
 #include <QUrlQuery>
 
@@ -37,45 +37,45 @@
 namespace qoembed {
 
 /* information comes from https://github.com/panzi/oembedendpoints */
-static QMap<QString, QString> InitUrlSchemeToEndpoints()
+static QMap<QString, QRegularExpression> InitEndpointToUrlSchemes()
 {
-    QMap<QString, QString> urlSchemeToEndpoints;
+    QMap<QString, QRegularExpression> endpointToUrlSchemes;
 
     // Youtube
-    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/watch.+$"), QStringLiteral("http://www.youtube.com/oembed"));
-    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/v/.+$"), QStringLiteral("http://www.youtube.com/oembed"));
-    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://youtu\\.be/.+$"), QStringLiteral("http://www.youtube.com/oembed"));
-    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/user/.+$"), QStringLiteral("http://www.youtube.com/oembed"));
-    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/[^#?/]+#[^#?/]+/.+$"), QStringLiteral("http://www.youtube.com/oembed"));
-    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://m\\.youtube\\.com/index.+$"), QStringLiteral("http://www.youtube.com/oembed"));
-    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/profile.+$"), QStringLiteral("http://www.youtube.com/oembed"));
-    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/view_play_list.+$"), QStringLiteral("http://www.youtube.com/oembed"));
-    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/playlist.+$"), QStringLiteral("http://www.youtube.com/oembed"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.youtube.com/oembed"), QRegularExpression("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/watch.+$"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.youtube.com/oembed"), QRegularExpression("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/v/.+$"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.youtube.com/oembed"), QRegularExpression("^http(?:s)?://youtu\\.be/.+$"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.youtube.com/oembed"), QRegularExpression("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/user/.+$"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.youtube.com/oembed"), QRegularExpression("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/[^#?/]+#[^#?/]+/.+$"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.youtube.com/oembed"), QRegularExpression("^http(?:s)?://m\\.youtube\\.com/index.+$"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.youtube.com/oembed"), QRegularExpression("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/profile.+$"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.youtube.com/oembed"), QRegularExpression("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/view_play_list.+$"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.youtube.com/oembed"), QRegularExpression("^http(?:s)?://(?:[-\\w]+\\.)?youtube\\.com/playlist.+$"));
 
     // Flickr
-    urlSchemeToEndpoints.insert(QStringLiteral("^http://[-\\w]+\\.flickr\\.com/photos/.+$"), QStringLiteral("http://www.flickr.com/services/oembed/"));
-    urlSchemeToEndpoints.insert(QStringLiteral("^http://flic\\.kr\\.com/.+$"), QStringLiteral("http://www.flickr.com/services/oembed/"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.flickr.com/services/oembed/"), QRegularExpression("^http://[-\\w]+\\.flickr\\.com/photos/.+$"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.flickr.com/services/oembed/"), QRegularExpression("^http://flic\\.kr\\.com/.+$"));
 
     // GitHub
-    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://gist\\.github\\.com/.+$"), QStringLiteral("https://github.com/api/oembed"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("https://github.com/api/oembed"), QRegularExpression("^http(?:s)?://gist\\.github\\.com/.+$"));
 
     // Kickstarter
-    urlSchemeToEndpoints.insert(QStringLiteral("^http://[-\\w]+\\.kickstarter\\.com/projects/.+$"), QStringLiteral("http://www.kickstarter.com/services/oembed"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.kickstarter.com/services/oembed"), QRegularExpression("^http://[-\\w]+\\.kickstarter\\.com/projects/.+$"));
 
     // Slideshare
-    urlSchemeToEndpoints.insert(QStringLiteral("^http://www\\.slideshare\\.net/.+$"), QStringLiteral("https://www.slideshare.net/api/oembed/2"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("https://www.slideshare.net/api/oembed/2"), QRegularExpression("^http://www\\.slideshare\\.net/.+$"));
 
     // Twitter
-    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://twitter\\.com/(?:#!)?[^#?/]+/status/.+$"), QStringLiteral("https://api.twitter.com/1/statuses/oembed.{format}"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("https://api.twitter.com/1/statuses/oembed.{format}"), QRegularExpression("^http(?:s)?://twitter\\.com/(?:#!)?[^#?/]+/status/.+$"));
 
     // Vimeo
-    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://(?:www\\.)?vimeo\\.com/.+$"), QStringLiteral("http://www.vimeo.com/api/oembed.{format}"));
-    urlSchemeToEndpoints.insert(QStringLiteral("^http(?:s)?://player\\.vimeo\\.com/.+$"), QStringLiteral("http://www.vimeo.com/api/oembed.{format}"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.vimeo.com/api/oembed.{format}"), QRegularExpression("^http(?:s)?://(?:www\\.)?vimeo\\.com/.+$"));
+    endpointToUrlSchemes.insertMulti(QStringLiteral("http://www.vimeo.com/api/oembed.{format}"), QRegularExpression("^http(?:s)?://player\\.vimeo\\.com/.+$"));
 
-    return urlSchemeToEndpoints;
+    return endpointToUrlSchemes;
 }
 
-const QMap<QString, QString> Provider::urlSchemeToEndpoints = InitUrlSchemeToEndpoints();
+const QMap<QString, QRegularExpression> Provider::endpointToUrlSchemes = InitEndpointToUrlSchemes();
 
 class ProviderPrivate
 {
@@ -127,12 +127,12 @@ void Provider::fetch(const Request &request)
 
 Provider *Provider::createForUrl(const QUrl &url, QObject *parent)
 {
-    QMapIterator<QString, QString> it(urlSchemeToEndpoints);
+    QMapIterator<QString, QRegularExpression> it(endpointToUrlSchemes);
     while (it.hasNext()) {
         it.next();
-        QRegExp rx(it.key());
-        if (rx.exactMatch(url.toString())) {
-            return new Provider(it.value(), parent);
+        QRegularExpressionMatch match = it.value().match(url.toString());
+        if (match.hasMatch()) {
+            return new Provider(it.key(), parent);
         }
     }
 
