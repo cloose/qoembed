@@ -117,7 +117,7 @@ void Provider::fetch(const Request &request)
     QUrl requestUrl(endpoint());
     requestUrl.setQuery(request.createQuery());
 
-    qDebug() << request.url() << requestUrl;
+//    qDebug() << request.url() << requestUrl;
 
     d->manager->get(QNetworkRequest(requestUrl));
 }

@@ -65,8 +65,8 @@ void OEmbedManager::fetch(const Request &request)
 
 void OEmbedManager::replyFinished(const QString &contentType, const QByteArray &content)
 {
-    qDebug() << contentType;
-    qDebug() << content;
+//    qDebug() << contentType;
+//    qDebug() << content;
 
     Response *response = 0;
 
@@ -89,7 +89,7 @@ void OEmbedManager::replyFinished(const QString &contentType, const QByteArray &
 void OEmbedManager::replyError(QNetworkReply::NetworkError code, const QString &errorString)
 {
     // TODO!
-    qDebug() << code << errorString;
+//    qDebug() << code << errorString;
 
     Error *error = new Error(errorString);
     emit finished(error);
