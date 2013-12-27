@@ -21,8 +21,8 @@ class JsonParserTest : public QObject
     Q_OBJECT
 
 private Q_SLOTS:
-    void handlesParsingOfEmptyByteArray();
-    void handlesParsingOfEmptyJsonDocument();
+    void defectIfEmptyByteArray();
+    void defectIfEmptyJsonDocument();
     void returnsBasicResponseIfTypeMissing();
     void parsesLinkResponse();
     void parsesPhotoResponse();
@@ -30,7 +30,7 @@ private Q_SLOTS:
     void parsesVideoResponse();
 };
 
-void JsonParserTest::handlesParsingOfEmptyByteArray()
+void JsonParserTest::defectIfEmptyByteArray()
 {
     JsonParser parser;
     Response *response = parser.fromJson(QByteArray());
@@ -38,7 +38,7 @@ void JsonParserTest::handlesParsingOfEmptyByteArray()
     QVERIFY2(response->isError(), qPrintable(QString("response type is %1").arg(response->type())));
 }
 
-void JsonParserTest::handlesParsingOfEmptyJsonDocument()
+void JsonParserTest::defectIfEmptyJsonDocument()
 {
     QJsonDocument doc;
 
