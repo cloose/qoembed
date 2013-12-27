@@ -33,6 +33,11 @@ add_subdirectory(example)
 
 include(GNUInstallDirs)
 
+if(NOT DEFINED CMAKE_INSTALL_LIBDIR)
+    message("set libdir variable")
+    set(CMAKE_INSTALL_LIBDIR lib)
+endif(NOT DEFINED CMAKE_INSTALL_LIBDIR)
+
 ### Packaging ###
 
 include(CPack)
