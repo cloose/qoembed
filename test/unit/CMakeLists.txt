@@ -2,6 +2,18 @@
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
+### json parser unit test ###
+
+set(jsonparsertest_SRCS
+    jsonparsertest.cpp
+)
+
+add_executable(jsonparsertest ${jsonparsertest_SRCS})
+target_link_libraries(jsonparsertest qoembed)
+qt5_use_modules(jsonparsertest Test)
+
+add_test(NAME jsonparsertest COMMAND jsonparsertest)
+
 ### provider unit test ###
 
 set(providertest_SRCS

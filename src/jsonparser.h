@@ -26,6 +26,8 @@
 #ifndef QOEMBED_JSONPARSER_H
 #define QOEMBED_JSONPARSER_H
 
+#include "qoembed_global.h"
+
 class QByteArray;
 class QJsonObject;
 
@@ -33,7 +35,7 @@ namespace qoembed {
 
 class Response;
 
-class JsonParser
+class QOEMBEDSHARED_EXPORT JsonParser
 {
 public:
     JsonParser();
