@@ -21,6 +21,7 @@ private Q_SLOTS:
 
     void canFetchResource();
     void returnsErrorResponseForUnknownUrl();
+    void returnsErrorResponseForNotExistingUrl();
     void returnsResponseThatContainsResourceTypeVideoForYoutube();
     void returnsResponseThatContainsResourceTypePhotoForFlicker();
     void returnsResponseThatContainsResourceTypeRichForSlideshare();
@@ -64,7 +65,24 @@ void OEmbedManagerTest::returnsErrorResponseForUnknownUrl()
 
     QVERIFY2(response != 0, "response is null");
     QVERIFY(response->isError());
-    QVERIFY2(!response->render().isEmpty(), "response is empty");
+    QVERIFY(response->render().contains("No suitable provider found"));
+}
+
+void OEmbedManagerTest::returnsErrorResponseForNotExistingUrl()
+{
+    OEmbedManager manager;
+    QSignalSpy spy(&manager, SIGNAL(finished(qoembed::Response*)));
+
+    manager.fetch(Request::createForUrl(QUrl("http://www.slideshare.net/UnknownUser/slides-do-not-exist")));
+
+    QVERIFY2(spy.wait(), "fetch request didn't finish after 5000 ms");
+
+    QList<QVariant> args = spy.takeFirst();
+    Response *response = args.at(0).value<Response*>();
+
+    QVERIFY2(response != 0, "response is null");
+    QVERIFY(response->isError());
+    QVERIFY(response->render().contains("Not Found"));
 }
 
 void OEmbedManagerTest::returnsResponseThatContainsResourceTypeVideoForYoutube()
