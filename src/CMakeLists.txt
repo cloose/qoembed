@@ -24,6 +24,7 @@ target_include_directories(qoembed INTERFACE "$<INSTALL_INTERFACE:$<INSTALL_PREF
 #
 # Setup path variables
 #
+include(GNUInstallDirs)
 set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/QOEmbed")
 set(INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_INCLUDEDIR}/QOEmbed")
 
