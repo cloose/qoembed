@@ -29,6 +29,7 @@
 #include <QDebug>
 #include <QDomDocument>
 
+#include "error.h"
 #include "link.h"
 #include "photo.h"
 #include "response.h"
@@ -48,9 +49,12 @@ Response *XmlParser::fromXml(const QByteArray &data)
     int errorColumn = 0;
 
     QDomDocument doc;
-    doc.setContent(data, &errorMsg, &errorLine, &errorColumn);
-//    qDebug() << data;
-    qDebug() << errorMsg << errorLine << errorColumn;
+    bool success = doc.setContent(data, &errorMsg, &errorLine, &errorColumn);
+
+    if (!success) {
+        Error *errorResponse = new Error(errorMsg);
+        return errorResponse;
+    }
 
     QDomElement root = doc.documentElement();
 

@@ -30,6 +30,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "error.h"
 #include "link.h"
 #include "photo.h"
 #include "response.h"
@@ -44,11 +45,13 @@ JsonParser::JsonParser()
 
 Response *JsonParser::fromJson(const QByteArray &data)
 {
-    QJsonParseError error;
-    QJsonDocument doc = QJsonDocument::fromJson(data, &error);
-//    qDebug() << data;
-//    qDebug() << doc.isObject() << doc.isArray() << doc.isEmpty() << doc.isNull();
-    qDebug() << error.errorString() << error.offset;
+    QJsonParseError parseError;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &parseError);
+
+    if (parseError.error != QJsonParseError::NoError) {
+        Error *errorResponse = new Error(parseError.errorString());
+        return errorResponse;
+    }
 
     QJsonObject obj = doc.object();
 
