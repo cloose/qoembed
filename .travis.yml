@@ -15,5 +15,5 @@ before_script:
   - export LD_LIBRARY_PATH="../../src:$LD_LIBRARY_PATH"         
   
 script:
-  - cmake ..
+  - cmake --trace ..
   - make all test
