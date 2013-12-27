@@ -22,7 +22,7 @@ qt5_use_modules(qoembed Core Network Xml)
 target_include_directories(qoembed INTERFACE "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>")
 
 #
-# Setup path variables
+# Setup path variables for installation
 #
 include(GNUInstallDirs)
 set(CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/QOEmbed")
@@ -46,10 +46,6 @@ write_basic_package_version_file(QOEmbedConfigVersion.cmake
 #
 # Installation
 #
-message("CMAKE_INSTALL_PREFIX:" "${CMAKE_INSTALL_PREFIX}")
-message("CMAKE_INSTALL_LIBDIR:" "${CMAKE_INSTALL_LIBDIR}")
-message("CMAKE_INSTALL_BINDIR:" "${CMAKE_INSTALL_BINDIR}")
-
 install(TARGETS qoembed 
         EXPORT QOEmbedTargets
         RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR} 

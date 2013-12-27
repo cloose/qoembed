@@ -29,19 +29,6 @@ add_subdirectory(src)
 add_subdirectory(test)
 add_subdirectory(example)
 
-### Installation ###
-
-include(GNUInstallDirs)
-
-if(NOT DEFINED CMAKE_INSTALL_LIBDIR)
-    message("set libdir variable")
-    set(CMAKE_INSTALL_LIBDIR lib)
-endif(NOT DEFINED CMAKE_INSTALL_LIBDIR)
-
-message("CMAKE_INSTALL_PREFIX:" "${CMAKE_INSTALL_PREFIX}")
-message("CMAKE_INSTALL_LIBDIR:" "${CMAKE_INSTALL_LIBDIR}")
-message("CMAKE_INSTALL_BINDIR:" "${CMAKE_INSTALL_BINDIR}")
-
 ### Packaging ###
 
 include(CPack)
