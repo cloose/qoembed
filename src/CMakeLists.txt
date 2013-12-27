@@ -45,10 +45,13 @@ write_basic_package_version_file(QOEmbedConfigVersion.cmake
 #
 # Installation
 #
+message(${CMAKE_INSTALL_PREFIX})
+message(${CMAKE_INSTALL_LIBDIR})
 install(TARGETS qoembed 
         EXPORT QOEmbedTargets
         RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR} 
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 install(FILES error.h
               link.h
