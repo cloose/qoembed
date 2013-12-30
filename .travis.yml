@@ -17,3 +17,4 @@ before_script:
 script:
   - cmake ..
   - make all test
+  - sudo make install
