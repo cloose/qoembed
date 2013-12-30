@@ -33,6 +33,10 @@
 
 namespace qoembed {
 
+
+/*!
+ * \brief Contains the query parameters for a request sent to a qoembed::Provider.
+ */
 class QOEMBEDSHARED_EXPORT Request
 {
 public:
@@ -42,9 +46,24 @@ public:
     Request &withMaxHeight(unsigned height);
     Request &withFormat(const QString &format);
 
+    /*!
+     * \return the URL to retrieve embedding information for
+     */
     QUrl url() const;
+
+    /*!
+     * \return the maximum width of the embedded resource
+     */
     unsigned maxWidth() const;
+
+    /*!
+     * \return the maximum height of the embedded resource
+     */
     unsigned maxHeight() const;
+
+    /*!
+     * \return the required response format
+     */
     QString format() const;
 
     QUrlQuery createQuery() const;

@@ -34,6 +34,9 @@ namespace qoembed {
 
 class ResponsePrivate;
 
+/*!
+ * \brief Contains the oEmbed data about a URL, as returned by a qoembed::Provider.
+ */
 class QOEMBEDSHARED_EXPORT Response
 {
 public:
@@ -46,18 +49,38 @@ public:
     virtual QString render() const;
 
     void setType(const QString &type);
+
+    /*!
+     * \return the resource type
+     */
     QString type() const;
 
     void setVersion(const QString &version);
+
+    /*!
+     * \return the oEmbed version number
+     */
     QString version() const;
 
     void setTitle(const QString &title);
+
+    /*!
+     * \return a text title, describing the resource
+     */
     QString title() const;
 
     void setAuthorName(const QString &authorName);
+
+    /*!
+     * \return the name of the author/owner of the resource
+     */
     QString authorName() const;
 
     void setAuthorUrl(const QString &authorUrl);
+
+    /*!
+     * \return a URL for the author/owner of the resource
+     */
     QString authorUrl() const;
 
     void setProviderName(const QString &providerName);
@@ -75,10 +98,29 @@ public:
     void setThumbnailHeight(unsigned thumbnailHeight);
     unsigned thumbnailHeight() const;
 
+    /*!
+     * \return \c true if this is an error response
+     */
     bool isError() const;
+
+    /*!
+     * \return \c true if this is an oEmbed link response
+     */
     bool isLink() const;
+
+    /*!
+     * \return \c true if this is an oEmbed photo response
+     */
     bool isPhoto() const;
+
+    /*!
+     * \return \c true if this is an oEmbed rich response
+     */
     bool isRich() const;
+
+    /*!
+     * \return \c true if this is an oEmbed video response
+     */
     bool isVideo() const;
 
 private:
